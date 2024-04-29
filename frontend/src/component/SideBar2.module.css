@@ -1,0 +1,57 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px; /* 왼쪽으로 이동한 초기 위치 */
+    bottom: 0;
+    width: 250px;
+    background-color: #333;
+    z-index: 999;
+    transition: left 0.3s ease; /* 왼쪽으로 이동하는 애니메이션 */
+  }
+  
+  .sidebar-toggle {
+    position: absolute;
+    top: 20px;
+    right: -58px; /* 햄버거 아이콘이 왼쪽 밖으로 나오도록 설정 */
+    font-size: 1.5rem;
+    color: #000;
+    cursor: pointer;
+    z-index: 1000; /* 햄버거 아이콘이 가장 위로 올라오도록 설정 */
+  }
+  
+  .sidebar-content {
+    padding: 20px;
+    color: #fff;
+  }
+
+  .sidebar.active {
+    left: 0; /* 활성화되었을 때 사이드바를 오른쪽으로 슬라이드 */
+  }
+
+  .sidebar-toggle.active {
+    position: relative;
+    right: 0;
+  }
+  
+  /* 사이드바 전환 효과 */
+  .sidebar-transition-enter {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  
+  .sidebar-transition-enter-active {
+    opacity: 1;
+    transform: translateX(0%);
+    transition: opacity 300ms, transform 300ms;
+  }
+  
+  .sidebar-transition-exit {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+  
+  .sidebar-transition-exit-active {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: opacity 300ms, transform 300ms;
+  }
