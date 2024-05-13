@@ -1,0 +1,39 @@
+.header__div__name {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    text-align: center;
+}
+.header__div {
+    height: 50px;
+    display: flex;
+    position:fixed;
+    background-color: aliceblue;
+    width: 100%;
+    box-shadow: 1px 1px 1px 1px rgb(223, 223, 223);
+}
+.header__div__content {
+    max-width: 1200px;
+    margin: 0 auto; /* 헤더를 가운데로 정렬합니다 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px; /* 원하는 여백을 추가할 수 있습니다 */
+}
+.header__div__login {
+    position: absolute;
+    margin-right: auto;
+    right: 0;
+    padding:10px 0 0 0;
+}
+.header__div__name__text {
+    margin: 0 auto;
+    color: #b860ff;
+    text-align: center;
+    font-size: 1.8pc;
+}
+.header__div__sidebar {
+}
+.divSpace{
+    height:50px;
+}

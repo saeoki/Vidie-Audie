@@ -11,7 +11,7 @@
   
   .sidebar-toggle {
     position: absolute;
-    top: 20px;
+    top: 13px;
     right: -58px; /* 햄버거 아이콘이 왼쪽 밖으로 나오도록 설정 */
     font-size: 1.5rem;
     color: #000;

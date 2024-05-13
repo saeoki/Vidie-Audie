@@ -1,0 +1,93 @@
+@font-face {
+  font-family: "AppleSDGothicNeoB";
+  src: url("../fonts/AppleSDGothicNeoB.ttf");
+}
+.summary__container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+}
+.summary__title {
+    background-color: #d5a2ff;
+    width: 700px;
+    height: 38px;
+    margin:30px 0px;
+    text-align: center;
+    padding-top: 13px;
+    border-radius: 15px;
+  }
+.summary__video {
+    width: 500px;
+    height:250px;
+}
+
+.summary__contents__container {
+    width: 700px;
+    margin-top: 40px;
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 10px;
+  }
+
+.summary__contents__container__name {
+  background-color: rgb(255, 255, 255);
+  border-color:#d5a2ff;
+  border:  1.5px solid #d5a2ff;
+  margin-right: auto;
+  width: 90px;
+  height:28px;
+  text-align: center;
+  border-radius: 10px;
+  font-family: "AppleSDGothicNeoB";
+  font-size: 20px;
+}
+.summary__contents__container__content {
+  background-color: rgb(249, 249, 249);
+  margin-top: 20px;
+  border:  1.5px solid rgb(161, 161, 161);
+  border-radius: 15px;
+  width: 670px;
+  min-height: 100px;
+  padding: 12px 15px 10px 15px;
+  font-family: "AppleSDGothicNeoB";
+}
+.summary__recommend {
+  margin-top: 20px;
+  display:flex;
+  align-items: center;
+  flex-direction: column;
+  width: 700px;
+}
+.summary__recommend__name{
+  border-color:#d5a2ff;
+  border:  1.5px solid #d5a2ff;
+  margin-right: auto;
+  width: 90px;
+  height:28px;
+  text-align: center;
+  border-radius: 10px;
+  font-family: "AppleSDGothicNeoB";
+  font-size: 20px;
+}
+.summary__recommend__contents{
+  margin-top: 20px;
+  background-color: rgb(249, 249, 249);
+  width: 100%;
+  border-radius: 10px;
+  border:  1.5px solid rgb(161, 161, 161);
+}
+.summary__recommend__contents__video {
+  float: left;
+  border-radius: 10px;
+  margin: 5px;
+}
+.summary__recommend__contents__title {
+  float: left;
+  margin-left: 15px;
+  margin-top: 5px;
+  font-size: 18px;
+  font-family: "AppleSDGothicNeoB";
+  font-weight: 800;
+}
