@@ -8,6 +8,7 @@ import MainPage from './routes/MainPage';
 import Recommend from './routes/Recommend';
 import History from './routes/History';
 import HistoryDetail from './routes/HistoryDetail';
+import LoginPage from './routes/LoginPage';
 
 function App() {
 

@@ -1,6 +1,7 @@
 import '../App.css';
 import "../component/SearchBar.module.css";
 import "./MainPage.css";
+import "./MainPage.css";
 
 import React from 'react';
 import {BrowserRouter, Route, Routes, Link, useNavigate} from "react-router-dom"
