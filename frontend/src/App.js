@@ -5,6 +5,7 @@ import React from 'react';
 import {BrowserRouter, Route, Routes, Link} from "react-router-dom"
 import Summary from './routes/Summary';
 import MainPage from './routes/MainPage';
+import LoginPage from './routes/LoginPage';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" exact={true} element={<MainPage />}></Route>
           <Route path="/summary" exact={true} element={<Summary />}></Route>
+          <Route path="/LoginPage" exact={true} element={<LoginPage />}></Route>
         </Routes>
     </div>
     </BrowserRouter>

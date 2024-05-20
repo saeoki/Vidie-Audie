@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { FaBars } from 'react-icons/fa';
 import { CSSTransition } from 'react-transition-group';
 import styles from './SideBar2.module.css';
+import AccordianMenu from './AccordianMenu';
 
 const Sidebar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -18,9 +19,7 @@ const Sidebar = () => {
         <div className={styles['sidebar-content']}>
           {/* 사이드바 내용 */}
           <ul>
-            <li>사용자 정보</li>
-            <li>맞춤 추천</li>
-            <li>요약 기록</li>
+          <AccordianMenu/>
           </ul>
         </div>
       </CSSTransition>
