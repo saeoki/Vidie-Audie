@@ -1,21 +1,19 @@
 import '../App.css';
 import "../component/SearchBar.module.css";
+import "./MainPage.css";
 
 import React from 'react';
-import {BrowserRouter, Route, Routes, Link} from "react-router-dom"
+import {BrowserRouter, Route, Routes, Link, useNavigate} from "react-router-dom"
 import SearchBar from '../component/SearchBar';
-import logo from '../images/logo.png';
-import SideBar from '../images/SideBar-Button.png';
-import SideBar2 from '../component/SideBar2';
-import Summary from './Summary';
-import LoginBtn from '../component/LoginBtn';
+
+import Header from '../component/Header';
 
 function MainPage() {
   // 검색어 처리 함수
+  const navigate = useNavigate();
   const handleSearch = (term) => {
     console.log("검색어:", term);
-    window.open(term);
-    // 여기에 검색어를 처리하는 로직을 추가
+    navigate(term);
   };
 
 
@@ -23,24 +21,16 @@ function MainPage() {
 
   return (
     <div className="App">
-      <div className='TopHeader'>
-        <SideBar2 />
-        <button className='SideBar'>
-          <img className="SideBar-Image" width="40px" height="40px" src={SideBar} alt="사이드바" />
-        </button>
-        
-        
-        <img width="200px" height="35px" src={logo} alt="로고"/>
-        <LoginBtn />
-      </div>
+    <Header />
+    <div className="Main__container">
 
-
-      <header>
         {/* SearchBar 컴포넌트 렌더링 */}
+        <div className='Main__SearchBar'>
         <SearchBar onSubmit={handleSearch} />
-      </header>
-      
-      <Link to={`/summary`}>요약 화면</Link>
+        </div>
+      <Link to={`recommend`}>추천 화면</Link>
+      <Link to={`/history`}>요약 기록</Link>
+      </div>
     </div>
   );
 }

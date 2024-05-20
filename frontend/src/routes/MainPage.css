@@ -1,0 +1,14 @@
+@font-face {
+    font-family: "AppleSDGothicNeoB";
+    src: url("../fonts/AppleSDGothicNeoB.ttf");
+  }
+  .MainPage__container {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      flex-direction: column;
+  }
+
+  .Main__SearchBar {
+    padding: 0px 0px 0px 240px;
+  }
