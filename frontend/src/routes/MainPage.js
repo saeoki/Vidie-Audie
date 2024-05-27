@@ -3,7 +3,7 @@ import "../component/SearchBar.module.css";
 import "./MainPage.css";
 
 import React from 'react';
-import {BrowserRouter, Route, Routes, Link} from "react-router-dom"
+import {Link} from "react-router-dom"
 import SearchBar from '../component/SearchBar';
 
 import Header from '../component/Header';
@@ -21,7 +21,7 @@ function MainPage() {
 
   return (
     <div className="App">
-    <Header />
+
     <div className="Main__container">
 
         {/* SearchBar 컴포넌트 렌더링 */}
@@ -29,6 +29,8 @@ function MainPage() {
         <SearchBar onSubmit={handleSearch} />
         </div>
       <Link to={`/summary`}>요약 화면</Link>
+      <Link to={`recommend`}>추천 화면</Link>
+      <Link to={`/history`}>요약 기록</Link>
       </div>
     </div>
   );

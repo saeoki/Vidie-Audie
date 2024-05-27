@@ -1,16 +1,20 @@
 import React, { useState, } from 'react';
 import style from './AccordianMenu.module.css';
+import KakaoLogin from 'react-kakao-login';
 
-const AccordianMenu = () => {
+const AccordianMenu = ({ userInfo }) => {
+  const nickname = userInfo?.properties?.nickname || '이름';
+  const email = userInfo?.kakao_account?.email || '이메일';
+  const profileImage = userInfo?.properties?.profile_image || '프로필사진';
 
-    const MENU_LIST = [
-      { title: '사용자 정보', list: ['이름', '계정'] },
-      { title: '맞춤 추천', list: ['추천내용1', '추천내용2', '추천내용3', '추천내용4'] },
-      { title: '요약 기록', list: ['요약기록1', '요약기록2', '요약기록3', '요약기록4'] },
-    ];
+  const MENU_LIST = [
+    { title: '사용자 정보', list: [nickname] },
+    { title: '맞춤 추천', list: ['추천내용1', '추천내용2', '추천내용3', '추천내용4'] },
+    { title: '요약 기록', list: ['요약기록1', '요약기록2', '요약기록3', '요약기록4'] },
+  ];
 
     // Nav 컴포넌트 정의
-const Nav = ({ children }) => {
+  const Nav = ({ children }) => {
     return <nav>{children}</nav>;
   };
   

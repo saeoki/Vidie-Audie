@@ -64,16 +64,21 @@
 }
 
 .Login__naverLogin__box {
-    width: 300px;
-    height: 45px;
+    display: flex;
     justify-content: center;
     align-items: center;
-    object-fit: cover;
 }
 
 .Login__naverLogin {
+    display: flex;
     width: 300px;
-    height: 45px;
-    object-fit: cover;
+    height: 15px;
+    object-fit: fill;
     background-image: url('../images/btnG_완성형.png');
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: contain;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 0px 30px 0px;
 }

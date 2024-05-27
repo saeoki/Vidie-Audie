@@ -3,14 +3,15 @@ import { Link } from "react-router-dom";
 import "./Header.css";
 import Sidebar from "./SideBar2";
 import LoginBtn from "./LoginBtn";
+import { TfiLayoutSidebar2 } from "react-icons/tfi";
 
 
-function Header() {
+function Header({userInfo}) {
     return (
         <div>
         <div className="header__div">
             <div className="header__div__content">
-                <div className="header__div__sidebar"><Sidebar/></div>
+                <div className="header__div__sidebar"><Sidebar userInfo={userInfo}/></div>
                 <div className="header__div__name">
                     <div className="header__div__name__text">
             <Link to="/"style={{ textDecoration: "none", color:"inherit"}}>

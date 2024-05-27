@@ -5,7 +5,7 @@ import { CSSTransition } from 'react-transition-group';
 import styles from './SideBar2.module.css';
 import AccordianMenu from './AccordianMenu';
 
-const Sidebar = () => {
+const Sidebar = ({userInfo}) => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   const toggleSidebar = () => {
@@ -19,7 +19,7 @@ const Sidebar = () => {
         <div className={styles['sidebar-content']}>
           {/* 사이드바 내용 */}
           <ul>
-          <AccordianMenu/>
+          <AccordianMenu userInfo={userInfo}/>
           </ul>
         </div>
       </CSSTransition>
