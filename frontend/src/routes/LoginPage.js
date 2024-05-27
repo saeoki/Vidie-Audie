@@ -38,9 +38,12 @@ function LoginPage({setUserInfo}){
                         <span className='Login__explain__content'>SNS 아이디로 빠르게 로그인/회원가입 하세요 :)</span>
                     </div>
                     <div className='Login__kakaoLogin__box'>
-                    <a className="Login__kakaoLogin" href="https://kauth.kakao.com/oauth/authorize?client_id=8869b2e721fae7a4bc8d282f48dfef0c&redirect_uri=http://localhost:3000/LoginPage/Kakao&response_type=code">
-                    <img src={kakaoLogin_}/>
-                    </a>
+                    <KakaoLogin
+                      jsKey="ab9f2e5a4c00992d05662f722f6d28e6"
+                      onSuccess={handleSuccess}
+                      onFailure={handleFailure}
+                      getProfile={true}
+                    />
                     </div>
                     <div className='Login__naverLogin__box'>
                     <a className="Login__naverLogin" href="">
@@ -48,12 +51,7 @@ function LoginPage({setUserInfo}){
                     </a>
                     </div>
                     <div>
-      <KakaoLogin
-        jsKey="ab9f2e5a4c00992d05662f722f6d28e6"
-        onSuccess={handleSuccess}
-        onFailure={handleFailure}
-        getProfile={true}
-      />
+
     </div>
             
             </div>

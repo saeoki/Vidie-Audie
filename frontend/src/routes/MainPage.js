@@ -1,19 +1,23 @@
 import '../App.css';
 import "../component/SearchBar.module.css";
 import "./MainPage.css";
+import "./MainPage.css";
 
 import React from 'react';
 import {Link} from "react-router-dom"
+
+import {BrowserRouter, Route, Routes, useNavigate} from "react-router-dom"
+
 import SearchBar from '../component/SearchBar';
 
 import Header from '../component/Header';
 
 function MainPage() {
   // 검색어 처리 함수
+  const navigate = useNavigate();
   const handleSearch = (term) => {
     console.log("검색어:", term);
-    window.open(term);
-    // 여기에 검색어를 처리하는 로직을 추가
+    navigate(term);
   };
 
 
@@ -28,7 +32,8 @@ function MainPage() {
         <div className='Main__SearchBar'>
         <SearchBar onSubmit={handleSearch} />
         </div>
-      <Link to={`/summary`}>요약 화면</Link>
+        <Link to={`/summary`}>요약 화면</Link>
+
       <Link to={`recommend`}>추천 화면</Link>
       <Link to={`/history`}>요약 기록</Link>
       </div>

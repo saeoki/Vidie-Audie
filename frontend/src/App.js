@@ -1,15 +1,15 @@
 import './App.css';
 import "./component/SearchBar.module.css";
-
 import {React, useState} from 'react';
-import {BrowserRouter, Route, Routes, Link} from "react-router-dom"
+import {BrowserRouter, Route, Routes,} from "react-router-dom"
 import Summary from './routes/Summary';
 import MainPage from './routes/MainPage';
+import History from './routes/History';
+import HistoryDetail from './routes/HistoryDetail';
 import LoginPage from './routes/LoginPage';
 import Header from './component/Header';
 import Recommend from './routes/Recommend';
-import History from './routes/History';
-import HistoryDetail from './routes/HistoryDetail';
+
 
 function App() {
 
@@ -23,6 +23,7 @@ function App() {
           <Route path="/" exact={true} element={<MainPage />}></Route>
           <Route path="/summary" exact={true} element={<Summary />}></Route>
           <Route path="/LoginPage" exact={true} element={<LoginPage setUserInfo={setUserInfo} />}></Route>
+          <Route path="/summary/:vid" exact={true} element={<Summary />}></Route>
           <Route path="/recommend" exact={true} element={<Recommend/>}></Route>
           <Route path="/history" exact={true} element={<History/>}></Route>
           <Route path="/historyDetail" exact={true} element={<HistoryDetail/>}></Route>
