@@ -78,6 +78,10 @@
   border-radius: 10px;
   border:  1.5px solid rgb(161, 161, 161);
 }
+.summary__recommend__contents__linkA {
+  text-decoration: none;
+  color: inherit;
+}
 .summary__recommend__contents__video {
   float: left;
   border-radius: 10px;
@@ -90,4 +94,5 @@
   font-size: 18px;
   font-family: "AppleSDGothicNeoB";
   font-weight: 800;
+  max-width: 480px;
 }

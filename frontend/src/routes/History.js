@@ -9,7 +9,6 @@ function History() {
     })
     return(
         <div>
-            <Header/>
             <div className='history'>
             {historyList.map(historyList => (
             <div className="history__list">
