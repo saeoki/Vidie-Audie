@@ -3,7 +3,7 @@ import "../component/SearchBar.module.css";
 import "./MainPage.css";
 import "./MainPage.css";
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Link} from "react-router-dom"
 
 import {BrowserRouter, Route, Routes, useNavigate} from "react-router-dom"
@@ -12,7 +12,7 @@ import SearchBar from '../component/SearchBar';
 
 import Header from '../component/Header';
 
-function MainPage() {
+function MainPage({userInfo}) {
   // 검색어 처리 함수
   const navigate = useNavigate();
   const handleSearch = (term) => {
@@ -32,10 +32,12 @@ function MainPage() {
         <div className='Main__SearchBar'>
         <SearchBar onSubmit={handleSearch} />
         </div>
-        <Link to={`/summary`}>요약 화면</Link>
-
-      <Link to={`recommend`}>추천 화면</Link>
-      <Link to={`/history`}>요약 기록</Link>
+          { userInfo != null ?
+            <div><Link to={`/recommend/${userInfo.id}`}>추천 화면</Link>
+            <Link to={`/history/${userInfo.id}`}>요약 기록</Link></div>
+            : null
+          }
+      
       </div>
     </div>
   );
