@@ -28,10 +28,8 @@ function App() {
           <Route path="/history/:uid" exact={true} element={<History userInfo={userInfo}/>}></Route>
           <Route path="/historyDetail/:uid/:vid" exact={true} element={<HistoryDetail userInfo={userInfo}/>}></Route>
         </Routes>
-
     </div>
     </BrowserRouter>
-    
   );
 }
 

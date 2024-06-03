@@ -1,18 +1,32 @@
-import React from 'react';
+import {React, useState, useEffect} from 'react';
 import Header from '../component/Header';
 import "./Summary.css";
 import { useParams} from 'react-router-dom';
-import { useEffect,useState } from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import YouTube from "react-youtube";
 import axios from 'axios';
-import "./Recommend.css"
 
 function Summary() {
   const {vid} = useParams();
   const [videos, setvideos] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [title, setTitle] = useState('');
+
+  useEffect(() => {
+    // 데이터베이스에서 제목을 가져오는 API 호출
+    const fetchTitle = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/get_record_title/${vid}`);
+        setTitle(response.data.title);
+      } catch (error) {
+        console.error("Error fetching title:", error);
+      }
+    };
+    fetchTitle();
+  }, [vid]);
+
+  const [SummaryInfo] = SummaryInfo;
 
   var optionParams={
     q:"랄로",
