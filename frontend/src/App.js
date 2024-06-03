@@ -28,10 +28,8 @@ function App() {
           <Route path="/history" exact={true} element={<History/>}></Route>
           <Route path="/historyDetail" exact={true} element={<HistoryDetail/>}></Route>
         </Routes>
-
     </div>
     </BrowserRouter>
-    
   );
 }
 

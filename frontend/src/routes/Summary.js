@@ -1,12 +1,29 @@
-import React from 'react';
+import {React, useState, useEffect} from 'react';
 import Header from '../component/Header';
 import "./Summary.css";
 import { useParams } from 'react-router-dom';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import YouTube from "react-youtube";
+import axios from 'axios';
 
 function Summary() {
-  const {vid} = useParams();
+  const { vid } = useParams();
+  const [title, setTitle] = useState('');
+
+  useEffect(() => {
+    // 데이터베이스에서 제목을 가져오는 API 호출
+    const fetchTitle = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/get_record_title/${vid}`);
+        setTitle(response.data.title);
+      } catch (error) {
+        console.error("Error fetching title:", error);
+      }
+    };
+    fetchTitle();
+  }, [vid]);
+
+  const [SummaryInfo] = SummaryInfo;
   return (
     <div className="Summary">
       <Header />
