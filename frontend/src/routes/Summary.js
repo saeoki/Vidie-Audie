@@ -1,32 +1,13 @@
-import {React, useState, useEffect} from 'react';
-import Header from '../component/Header';
+import React from "react";
+import { useParams } from "react-router-dom";
 import "./Summary.css";
-import { useParams } from 'react-router-dom';
-import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import YouTube from "react-youtube";
-import axios from 'axios';
 
 function Summary() {
   const { vid } = useParams();
-  const [title, setTitle] = useState('');
 
-  useEffect(() => {
-    // 데이터베이스에서 제목을 가져오는 API 호출
-    const fetchTitle = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/get_record_title/${vid}`);
-        setTitle(response.data.title);
-      } catch (error) {
-        console.error("Error fetching title:", error);
-      }
-    };
-    fetchTitle();
-  }, [vid]);
-
-  const [SummaryInfo] = SummaryInfo;
   return (
     <div className="Summary">
-      <Header />
       <div className="summary__container">
         <div className="summary__title">this is title area</div>
         <div className="summary__video">
@@ -42,7 +23,8 @@ function Summary() {
             }}
             onReady={(e) => {
               e.target.mute(); //소리 끔
-            }}/>
+            }}
+          />
         </div>
         <div className="summary__contents__container">
           <div className="summary__contents__container__name">요 약</div>
@@ -51,9 +33,9 @@ function Summary() {
         <div className='summary__recommend'>
           <div className='summary__recommend__name'>맞춤 추천</div>
           <div className="summary__recommend__contents">
-            <img className="summary__recommend__contents__video"src='https://img.youtube.com/vi/qePJVJtP5zY/mqdefault.jpg' width="180px"></img>
+            <img className="summary__recommend__contents__video" src='https://img.youtube.com/vi/qePJVJtP5zY/mqdefault.jpg' width="180px" alt="추천 영상" />
             <div className='summary__recommend__contents__title'>영상 제목</div>
-            </div>
+          </div>
         </div>
       </div>
     </div>

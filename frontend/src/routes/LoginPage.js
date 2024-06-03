@@ -16,6 +16,7 @@ function LoginPage({ setUserInfo }) {
     .then((res) => {
       console.log('Server response:', res.data);  // 서버 응답 로그
       setUserInfo(res.data); // 사용자 정보 설정
+      localStorage.setItem('userInfo', JSON.stringify(res.data)); // 로컬 스토리지에 사용자 정보 저장
       navigate('/'); // MainPage로 이동
     })
     .catch((error) => {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from "./TitleInputBar.module.css";
 
-const TitleInputBar = ({ onTitleChange }) => {
+const TitleInputBar = ({ onSubmit }) => {
   const [title, setTitle] = useState('');
 
   const handleChange = (event) => {
@@ -10,11 +10,11 @@ const TitleInputBar = ({ onTitleChange }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onTitleChange(title);
+    onSubmit(title);
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles["search-bar"]}>
+    <form onSubmit={handleSubmit} className={styles["search-bar"]} >
       <input
         type="text"
         placeholder="요약본의 제목을 작성해주세요!"
