@@ -28,9 +28,7 @@ function Recommend ({userInfo}) {
 */
     useEffect(()=> {
         setKeyword([{"q":"랄로"},{"q":"머독"}])
-        console.log(keyword);
         console.log(userInfo)
-        console.log(uid)
     }, [])
 
 //설정한 키워드를 useEffect로 가져옴
