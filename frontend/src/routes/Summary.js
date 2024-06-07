@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{use}from "react";
 import { useParams } from "react-router-dom";
 import "./Summary.css";
 import { useParams} from 'react-router-dom';
@@ -55,12 +55,11 @@ function Summary() {
           <div className="summary__recommend__contents">
             <img className="summary__recommend__contents__video"src='https://img.youtube.com/vi/qePJVJtP5zY/mqdefault.jpg' width="180px"></img>
             <div className='summary__recommend__contents__title'>영상 제목</div>
-            </div>
+            </div>))};
         </div>
       </div>
     </div>
   );
-}
 }
 
 export default Summary;
