@@ -12,18 +12,6 @@ function Summary() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    // 데이터베이스에서 제목을 가져오는 API 호출
-    const fetchTitle = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/get_record_title/${vid}`);
-        setTitle(response.data.title);
-      } catch (error) {
-        console.error("Error fetching title:", error);
-      }
-    };
-    fetchTitle();
-  }, [vid]);
   var optionParams={
     q:"랄로",
     part:"snippet",
@@ -42,10 +30,12 @@ function Summary() {
 //api로부터 데이터 가져오기 -> videos
 useEffect(() => {
   const fetchVideos = async () => {
+  
+    url=url.substr(0, url.length-1)
       setLoading(true);
       try {
-          const response = await axios.get(url);
-          setvideos(response.data);
+          const res = await axios.get(url);
+          setvideos(res.data);
           console.log(videos)
       } catch (e) {
           setError(e);
@@ -54,6 +44,21 @@ useEffect(() => {
   };
   fetchVideos();
 }, []);
+  useEffect(() => {
+    // 데이터베이스에서 제목을 가져오는 API 호출
+    const fetchTitle = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/get_record_title/${vid}`);
+        setTitle(response.data.title);
+      } catch (error) {
+        console.error("Error fetching title:", error);
+      }
+    };
+    fetchTitle();
+  }, [vid]);
+
+
+
   return (
     <div className="Summary">
       <div className="summary__container">
