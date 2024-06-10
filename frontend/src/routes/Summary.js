@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./Summary.css";
 import YouTube from "react-youtube";
-import axios from 'axios';
-import "./Recommend.css"
+import axios from "axios";
 
 function Summary() {
   const { vid } = useParams();
+  const [title, setTitle] = useState("Loading...");
+
+  useEffect(() => {
+    const fetchTitle = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/video_title/${vid}`);
+        console.log("Backend response:", response.data);
+        setTitle(response.data.title);
+      } catch (error) {
+        console.error("Error fetching title:", error);
+        setTitle("Error fetching title");
+      }
+    };
+
+    fetchTitle();
+  }, [vid]);
 
   return (
     <div className="Summary">
       <div className="summary__container">
-        <div className="summary__title">
-      </div>
+        <div className="summary__title">{title}</div>
         <div className="summary__video">
           <YouTube
             videoId={vid} //동영상 주소
