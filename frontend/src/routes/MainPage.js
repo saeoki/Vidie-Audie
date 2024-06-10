@@ -24,10 +24,12 @@ function MainPage({ userInfo }) {
     // URL과 제목을 데이터베이스에 저장
     if (userInfo) {
       try {
+        console.log(`Saving record for user ${userInfo.id}: URL=${videoIdFromURI}, Title=${title}`);
         await axios.post(`http://localhost:5000/user/${userInfo.id}/add_record`, {
           url: videoIdFromURI,
           title: title
         });
+        console.log("Record saved successfully");
       } catch (error) {
         console.error("Error saving record:", error);
       }
