@@ -29,21 +29,22 @@ const AccordianMenu = ({ userInfo }) => {
   }, [userInfo]);
 
   const handleRecordClick = (videoUrl) => {
-    navigate(`/summary/${videoUrl}`);
+    navigate(`/summary/${encodeURIComponent(videoUrl)}`);
   };
 
   const MENU_LIST = [
-    { title: '사용자 정보', list: [userInfo?.kakao_account?.profile?.nickname || '이름'] },
-    { title: '맞춤 추천', list: ['추천내용1', '추천내용2', '추천내용3', '추천내용4'] },
+    { title: '사용자 정보', list: [userInfo?.kakao_account?.profile?.nickname || '이름'], key: 'user-info' },
+    { title: '맞춤 추천', list: ['추천내용1', '추천내용2', '추천내용3', '추천내용4'], key: 'recommendations' },
     {
       title: '요약 기록',
-      list: (records && records.length > 0)
+      list: (userInfo && records.length > 0)
         ? records.map((record, idx) => {
             const title = record[2]?.length > 4 ? `${record[2].substring(0, 4)}...` : record[2];
             const videoUrl = record[1];
             return { title, videoUrl, key: `record-${idx}` };
           })
-        : [{ title: '기록이 없습니다.', videoUrl: '', key: 'no-record' }]
+        : [{ title: '기록이 없습니다.', videoUrl: '', key: 'no-records' }],
+      key: 'summary-records'
     },
   ];
 
@@ -94,20 +95,22 @@ const AccordianMenu = ({ userInfo }) => {
         <Title></Title>
       </TitleWrapper>
       <Ul>
-        {MENU_LIST.map((item, idx) => {
-          const isActive = idx === activeIndex;
+        {userInfo ? (
+          MENU_LIST.map((item, idx) => {
+            const isActive = idx === activeIndex;
 
-          return (
-            <ListItem
-              title={item.title}
-              idx={idx}
-              list={item.list}
-              isActive={isActive}
-              setActiveIndex={setActiveIndex}
-              key={`menuitem-${idx}`}
-            />
-          );
-        })}
+            return (
+              <ListItem
+                title={item.title}
+                idx={idx}
+                list={item.list}
+                isActive={isActive}
+                setActiveIndex={setActiveIndex}
+                key={item.key}
+              />
+            );
+          })
+        ) : null}
       </Ul>
     </Nav>
   );

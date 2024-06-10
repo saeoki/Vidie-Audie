@@ -25,7 +25,7 @@ function Summary() {
 
   return (
     <div className="Summary">
-      <div className="summary__container">
+      <div className="summary__container"> 
         <div className="summary__title">{title}</div>
         <div className="summary__video">
           <YouTube
