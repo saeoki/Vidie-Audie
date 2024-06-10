@@ -32,19 +32,24 @@ const AccordianMenu = ({ userInfo }) => {
     navigate(`/summary/${encodeURIComponent(videoUrl)}`);
   };
 
+  const handleRecommendClick = () => {
+    navigate('/recommend');
+  };
+
+  // MENU_LIST 생성 시 key 값 추가
   const MENU_LIST = [
-    { title: '사용자 정보', list: [userInfo?.kakao_account?.profile?.nickname || '이름'], key: 'user-info' },
-    { title: '맞춤 추천', list: ['추천내용1', '추천내용2', '추천내용3', '추천내용4'], key: 'recommendations' },
+    { title: '사용자 정보', list: [userInfo?.kakao_account?.profile?.nickname || '이름'].map((item, index) => ({ title: item, key: `user-info-${index}` })), key: 'user-info' },
+    { title: '맞춤 추천', list: [], key: 'recommendations', onClick: handleRecommendClick },
     {
       title: '요약 기록',
       list: (userInfo && records.length > 0)
         ? records.map((record, idx) => {
             const title = record[2]?.length > 4 ? `${record[2].substring(0, 4)}...` : record[2];
             const videoUrl = record[1];
-            return { title, videoUrl, key: `record-${idx}` };
+            return { title, videoUrl, key: `record-${idx}` }; // key 속성 추가
           })
         : [{ title: '기록이 없습니다.', videoUrl: '', key: 'no-records' }],
-      key: 'summary-records'
+      key: 'summary-records' // key 속성 추가
     },
   ];
 
@@ -64,9 +69,13 @@ const AccordianMenu = ({ userInfo }) => {
     return <ul>{children}</ul>;
   };
 
-  const ListItem = ({ title, idx, list = [], isActive, setActiveIndex }) => {
+  const ListItem = ({ title, idx, list = [], isActive, setActiveIndex, onClick }) => {
     const handleClick = () => {
-      setActiveIndex(isActive ? null : idx);
+      if (onClick) {
+        onClick();
+      } else {
+        setActiveIndex(isActive ? null : idx);
+      }
     };
 
     return (
@@ -77,7 +86,7 @@ const AccordianMenu = ({ userInfo }) => {
             {list.map((item) => (
               <li
                 className={style.liActive}
-                key={item.key}
+                key={item.key || item.title} // key 속성 유지, title로 key 설정
                 onClick={() => idx === 2 ? handleRecordClick(item.videoUrl) : null}
               >
                 {item.title}
@@ -106,7 +115,8 @@ const AccordianMenu = ({ userInfo }) => {
                 list={item.list}
                 isActive={isActive}
                 setActiveIndex={setActiveIndex}
-                key={item.key}
+                key={item.key || item.title} // key 속성 유지, title로 key 설정
+                onClick={item.onClick}
               />
             );
           })

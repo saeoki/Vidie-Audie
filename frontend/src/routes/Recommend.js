@@ -1,15 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import Header from '../component/Header';
 import "./Recommend.css";
 
 function Recommend () {
     const[video,setVideo] = useState([]);
     useEffect(() => {
         setVideo([{"id":"h8TLXfcqP_s"},{"id":"wursWCYQ-y8"},{"id":"kZz5BqihN5Y"}])
-    })
+    }, []); // [] 추가하여 첫 렌더링 시에만 실행되도록 수정
     return(
         <div>
-            <Header/>
             <div className='recommend'>
                 <div className='recommend__analyze'>
                     <div className='recommend__analyze__text'>user님은</div>
@@ -22,7 +20,7 @@ function Recommend () {
                     <div className='recommend__container__videosBox'>
                 
                 {video.map(video => (
-                <div className="recommend__container__videosBox__video">
+                <div className="recommend__container__videosBox__video" key={video.id}>
                     <div>
                         <div className="history__list__content">
                         <img className="summary__recommend__contents__video"src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`} width="180px"></img>
