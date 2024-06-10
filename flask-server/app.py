@@ -94,32 +94,38 @@ def kakao_login():
 
 @app.route('/user/<int:user_id>/add_record', methods=['POST'])
 def add_record(user_id):
-    data = request.json
-    url = data.get('url')
-    title = data.get('title')
-    if not url or not title:
-        return jsonify({'error': 'URL and title are required'}), 400
-
-    db_conn = get_db_connection()
-    if db_conn is None:
-        print('Database connection failed')
-        return jsonify({'error': 'Failed to connect to database'}), 500
-
-    cursor = db_conn.cursor()
     try:
-        cursor.execute("""
-            INSERT INTO user_records (user_id, url, title)
-            VALUES (%s, %s, %s)
-        """, (user_id, url, title))
-        db_conn.commit()
-    except mysql.connector.Error as err:
-        print(f"Error executing SQL: {err}")
-        return jsonify({'error': str(err)}), 500
-    finally:
-        cursor.close()
-        db_conn.close()
+        data = request.json
+        url = data.get('url')
+        title = data.get('title')
+        if not url or not title:
+            return jsonify({'error': 'URL and title are required'}), 400
 
-    return jsonify({'status': 'success'}), 201
+        db_conn = get_db_connection()
+        if db_conn is None:
+            print('Database connection failed')
+            return jsonify({'error': 'Failed to connect to database'}), 500
+
+        cursor = db_conn.cursor()
+        try:
+            print(f"Inserting record for user {user_id}: URL={url}, Title={title}")
+            cursor.execute("""
+                INSERT INTO user_records (user_id, video_url, title)
+                VALUES (%s, %s, %s)
+            """, (user_id, url, title))
+            db_conn.commit()
+            print("Record insertion successful")
+        except mysql.connector.Error as err:
+            print(f"Error executing SQL: {err}")
+            return jsonify({'error': str(err)}), 500
+        finally:
+            cursor.close()
+            db_conn.close()
+
+        return jsonify({'status': 'success'}), 201
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return jsonify({'error': 'Internal Server Error'}), 500
 
 @app.route('/user/<int:user_id>/records', methods=['GET'])
 def get_records(user_id):
@@ -131,7 +137,7 @@ def get_records(user_id):
     cursor = db_conn.cursor()
     try:
         cursor.execute("""
-            SELECT id, url, title, created_at FROM user_records WHERE user_id = %s
+            SELECT id, video_url, title, created_at FROM user_records WHERE user_id = %s
         """, (user_id,))
         records = cursor.fetchall()
     except mysql.connector.Error as err:
@@ -142,6 +148,42 @@ def get_records(user_id):
         db_conn.close()
 
     return jsonify(records)
+
+
+@app.route('/video_title/<video_id>', methods=['GET'])
+def get_video_title(video_id):
+    print(f"Received request for video title with ID: {video_id}")
+    db_conn = get_db_connection()
+    if db_conn is None:
+        print("Database connection failed")
+        return jsonify({'error': 'Failed to connect to database'}), 500
+
+    cursor = db_conn.cursor()
+    title = "Title not found"
+    try:
+        cursor.execute("""
+            SELECT title FROM user_records WHERE video_url = %s
+        """, (video_id,))
+        result = cursor.fetchone()
+        print(f"Query result: {result}")
+        if result:
+            title = result[0]
+        # Read all results to avoid "Unread result found" error
+        cursor.fetchall()
+    except mysql.connector.Error as err:
+        print(f"Error executing SQL: {err}")
+        return jsonify({'error': str(err)}), 500
+    finally:
+        cursor.close()
+        db_conn.close()
+
+    return jsonify({'title': title})
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
