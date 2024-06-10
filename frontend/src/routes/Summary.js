@@ -1,53 +1,13 @@
-import React from 'react';
-import Header from '../component/Header';
+import React from "react";
+import { useParams } from "react-router-dom";
 import "./Summary.css";
-import { useParams} from 'react-router-dom';
-import { useEffect,useState } from 'react';
-import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import YouTube from "react-youtube";
 import axios from 'axios';
 import "./Recommend.css"
 
 function Summary() {
-  const {vid} = useParams();
-  const [videos, setvideos] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const { vid } = useParams();
 
-  var optionParams={
-    q:"랄로",
-    part:"snippet",
-    key:"AIzaSyBglDCxMV_AFedYSCM582trb08sqtnuteA",
-    type:"video",
-    maxResults:2
-   };
-   var url="https://www.googleapis.com/youtube/v3/search?";
-   for(var option in optionParams){
-     url+=option+"="+optionParams[option]+"&";
-   }
-   url=url.substr(0, url.length-1);
-  useEffect(() => {
-    const fetchVideo = async () => {
-      try {
-        const res = await axios.get(url);
-        console.log(res.data)
-        setvideos(res.data);
-      } catch (e) {
-        setError(e);
-      }
-      setLoading(false);
-    };
-    fetchVideo();
-  }, []);
-  if(!vid || vid=="false") {
-    return (
-      <div className='needLogin'>
-          <div className='needLogin__textArea'>
-              URL을 다시 한번 확인해주세요!
-          </div>
-      </div>
-    )
-  } else{
   return (
     <div className="Summary">
       <div className="summary__container">
@@ -66,7 +26,8 @@ function Summary() {
             }}
             onReady={(e) => {
               e.target.mute(); //소리 끔
-            }}/>
+            }}
+          />
         </div>
         <div className="summary__contents__container">
           <div className="summary__contents__container__name">요 약</div>
@@ -77,12 +38,9 @@ function Summary() {
 
           {videos && videos.items.map((video) =>(
           <div className="summary__recommend__contents">
-            <a className="summary__recommend__contents__linkA" href={`https://www.youtube.com/watch?v=${video.id.videoId}`} target="_blank">
-              <img className="summary__recommend__contents__video"src={`https://img.youtube.com/vi/${video.id.videoId}/mqdefault.jpg`} width="180px"></img>
-            <div className='summary__recommend__contents__title'>{video.snippet.title}</div>
-            </a>
+            <img className="summary__recommend__contents__video" src='https://img.youtube.com/vi/qePJVJtP5zY/mqdefault.jpg' width="180px" alt="추천 영상" />
+            <div className='summary__recommend__contents__title'>영상 제목</div>
           </div>
-      ))}
         </div>
       </div>
     </div>

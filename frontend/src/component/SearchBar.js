@@ -6,11 +6,8 @@ const SearchBar = ({ onSubmit }) => {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    const videoIdFromURI = term.split('?v=').length > 1 ? term.split('?v=')[1].split('&')[0] : false;
-    onSubmit(`/summary/${videoIdFromURI}`);
+    onSubmit(term);
   };
-
-
 
   return (
     <form onSubmit={onFormSubmit} className={styles["search-bar"]} >
