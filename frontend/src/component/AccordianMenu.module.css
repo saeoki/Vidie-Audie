@@ -1,49 +1,48 @@
 @keyframes slideDown {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-  
-  .slideDown {
-    animation: slideDown 0.5s ease forwards;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .button {
-    width: 150px;
-    margin: 5px 5px 5px 5px;
-    border-style: none;
-    text-align: left;
-    font-size: 25px;
-  }
-  
-  .button:hover {
-    background-color: blanchedalmond;
-    border-radius: 6px;
-  }
-  
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-  }
-  
-  .liActive {
-    color: black;
-  }
-  
-  .liActive:hover {
-    background-color: antiquewhite;
-    border-radius: 6px;
-  }
-  
-  li {
-    list-style: none;
-    padding-left: 5px;
-    font-size: 30px;
-  }
-  
+}
+
+.slideDown {
+  animation: slideDown 0.5s ease forwards;
+}
+
+.button {
+  width: 150px;
+  margin: 5px 5px 5px 5px;
+  border-style: none;
+  text-align: left;
+  font-size: 25px;
+}
+
+.button:hover {
+  background-color: blanchedalmond;
+  border-radius: 6px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.liActive {
+  color: black;
+}
+
+.liActive:hover {
+  background-color: antiquewhite;
+  border-radius: 6px;
+}
+
+li {
+  list-style: none;
+  padding-left: 5px;
+  font-size: 30px;
+}
