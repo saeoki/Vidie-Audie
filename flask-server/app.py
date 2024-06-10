@@ -5,17 +5,22 @@ from mysql.connector import errorcode
 from flask_cors import CORS
 import os
 from datetime import datetime
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 KAKAO_API_HOST = "https://kapi.kakao.com"
-KAKAO_REST_API_KEY = "8869b2e721fae7a4bc8d282f48dfef0c"
+KAKAO_REST_API_KEY = os.getenv('KAKAO_REST_API_KEY')
 
 # MySQL 설정
-MYSQL_DATABASE_USER = 'root'
-MYSQL_DATABASE_PASSWORD = '12qwaszx'
-MYSQL_DATABASE_DB = 'user_db'
-MYSQL_DATABASE_HOST = 'localhost'
+MYSQL_DATABASE_USER = os.getenv('MYSQL_DATABASE_USER')
+MYSQL_DATABASE_PASSWORD = os.getenv('MYSQL_DATABASE_PASSWORD')
+MYSQL_DATABASE_DB = os.getenv('MYSQL_DATABASE_DB')
+MYSQL_DATABASE_HOST = os.getenv('MYSQL_DATABASE_HOST')
+MYSQL_DATABASE_PORT = os.getenv('MYSQL_DATABASE_PORT')
 
 def get_db_connection():
     try:
@@ -24,7 +29,8 @@ def get_db_connection():
             user=MYSQL_DATABASE_USER,
             password=MYSQL_DATABASE_PASSWORD,
             host=MYSQL_DATABASE_HOST,
-            database=MYSQL_DATABASE_DB
+            database=MYSQL_DATABASE_DB,
+            port=MYSQL_DATABASE_PORT
         )
         print("Database connection successful")
         return connection
