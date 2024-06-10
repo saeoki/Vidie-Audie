@@ -8,35 +8,44 @@ import axios from "axios";
 function Summary() {
   const { vid } = useParams();
   const [title, setTitle] = useState('');
-  const [videos, setvideos] = useState([]);
+  const [videos, setvideos] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  var optionParams={
-    q:"랄로",
-    part:"snippet",
-    key:"AIzaSyBglDCxMV_AFedYSCM582trb08sqtnuteA",
-    type:"video",
-    maxResults:2
-};
-  //youtube api URL만들기
-  var url="https://www.googleapis.com/youtube/v3/search?";
-  for(var option in optionParams){
-    url+=option+"="+optionParams[option]+"&";
-  }
-
-  url=url.substr(0, url.length-1)
+  useEffect(() => {
+    // 데이터베이스에서 제목을 가져오는 API 호출
+    const fetchTitle = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/get_record_title/${vid}`);
+        setTitle(response.data.title);
+        console.log(response.data)
+      } catch (e) {
+        console.error("Error fetching title:", e);
+      }
+    };
+    fetchTitle();
+  }, [vid]);
 
 //api로부터 데이터 가져오기 -> videos
 useEffect(() => {
   const fetchVideos = async () => {
-  
+    var optionParams={
+      q:"랄로",
+      part:"snippet",
+      key:"AIzaSyBglDCxMV_AFedYSCM582trb08sqtnuteA",
+      type:"video",
+      maxResults:2
+  };
+    //youtube api URL만들기
+    var url="https://www.googleapis.com/youtube/v3/search?";
+    for(var option in optionParams){
+      url+=option+"="+optionParams[option]+"&";
+    }
     url=url.substr(0, url.length-1)
       setLoading(true);
       try {
           const res = await axios.get(url);
           setvideos(res.data);
-          console.log(videos)
       } catch (e) {
           setError(e);
       }
@@ -44,26 +53,11 @@ useEffect(() => {
   };
   fetchVideos();
 }, []);
-  useEffect(() => {
-    // 데이터베이스에서 제목을 가져오는 API 호출
-    const fetchTitle = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/get_record_title/${vid}`);
-        setTitle(response.data.title);
-      } catch (error) {
-        console.error("Error fetching title:", error);
-      }
-    };
-    fetchTitle();
-  }, [vid]);
-
-
 
   return (
     <div className="Summary">
       <div className="summary__container">
-        <div className="summary__title">
-      </div>
+        <div className="summary__title">{title}</div>
         <div className="summary__video">
           <YouTube
             videoId={vid} //동영상 주소

@@ -28,7 +28,7 @@ function App() {
     <Header userInfo={userInfo} /> {/* Header에 userInfo prop 전달 */}
         <Routes>
         <Route path="/" exact={true} element={<MainPage userInfo={userInfo} />}></Route>
-          <Route path="/summary" exact={true} element={<Summary />}></Route>
+          <Route path="/summary" exact={true} element={<Summary userInfo={userInfo}/>}></Route>
           <Route path="/LoginPage" exact={true} element={<LoginPage setUserInfo={setUserInfo} />}></Route>
           <Route path="/summary/:vid" exact={true} element={<Summary />}></Route>
           <Route path="/recommend/:uid" exact={true} element={<Recommend userInfo={userInfo}/>} ></Route>
