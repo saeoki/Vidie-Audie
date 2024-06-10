@@ -1,0 +1,10 @@
+.needLogin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.needLogin__textArea {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 30px;
+}

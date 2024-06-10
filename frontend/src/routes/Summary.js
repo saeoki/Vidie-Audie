@@ -49,6 +49,8 @@ function Summary() {
         </div>
         <div className='summary__recommend'>
           <div className='summary__recommend__name'>맞춤 추천</div>
+
+          {videos && videos.items.map((video) =>(
           <div className="summary__recommend__contents">
             <img className="summary__recommend__contents__video" src='https://img.youtube.com/vi/qePJVJtP5zY/mqdefault.jpg' width="180px" alt="추천 영상" />
             <div className='summary__recommend__contents__title'>영상 제목</div>
@@ -57,6 +59,7 @@ function Summary() {
       </div>
     </div>
   );
+}
 }
 
 export default Summary;

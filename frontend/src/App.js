@@ -31,9 +31,9 @@ function App() {
           <Route path="/summary" exact={true} element={<Summary userInfo={userInfo}/>}></Route>
           <Route path="/LoginPage" exact={true} element={<LoginPage setUserInfo={setUserInfo} />}></Route>
           <Route path="/summary/:vid" exact={true} element={<Summary />}></Route>
-          <Route path="/recommend" exact={true} element={<Recommend/>}></Route>
-          <Route path="/history" exact={true} element={<History/>}></Route>
-          <Route path="/historyDetail" exact={true} element={<HistoryDetail/>}></Route>
+          <Route path="/recommend/:uid" exact={true} element={<Recommend userInfo={userInfo}/>} ></Route>
+          <Route path="/history/:uid" exact={true} element={<History userInfo={userInfo}/>}></Route>
+          <Route path="/historyDetail/:uid/:vid" exact={true} element={<HistoryDetail userInfo={userInfo}/>}></Route>
         </Routes>
     </div>
     </BrowserRouter>
