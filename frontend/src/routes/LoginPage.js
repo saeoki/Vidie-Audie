@@ -39,7 +39,7 @@ function LoginPage({ setUserInfo }) {
           </div>
           <div className='Login__kakaoLogin__box'>
             <KakaoLogin
-              jsKey="ab9f2e5a4c00992d05662f722f6d28e6"
+              jsKey={process.env.REACT_APP_KAKAO_JSKEY}
               onSuccess={handleSuccess}
               onFailure={handleFailure}
               getProfile={true}

@@ -32,14 +32,10 @@ const AccordianMenu = ({ userInfo }) => {
     navigate(`/summary/${encodeURIComponent(videoUrl)}`);
   };
 
-  const handleRecommendClick = () => {
-    navigate('/recommend');
-  };
-
   // MENU_LIST 생성 시 key 값 추가
   const MENU_LIST = [
-    { title: '사용자 정보', list: [userInfo?.kakao_account?.profile?.nickname || '이름'].map((item, index) => ({ title: item, key: `user-info-${index}` })), key: 'user-info' },
-    { title: '맞춤 추천', list: [], key: 'recommendations', onClick: handleRecommendClick },
+    { title: '사용자 정보', list: [userInfo?.kakao_account?.profile?.nickname || '이름'], key: 'user-info' },
+    { title: '맞춤 추천', list: [], key: 'recommendations' }, // 맞춤 추천 항목에서 하위 목록 제거
     {
       title: '요약 기록',
       list: (userInfo && records.length > 0)
@@ -69,16 +65,13 @@ const AccordianMenu = ({ userInfo }) => {
     return <ul>{children}</ul>;
   };
 
-  const ListItem = ({ title, idx, list = [], isActive, setActiveIndex, onClick }) => {
+  const ListItem = ({ title, idx, list = [], isActive, setActiveIndex }) => {
     const handleClick = () => {
-      if (onClick) {
-        onClick();
-      } else {
-        setActiveIndex(isActive ? null : idx);
-      }
+      setActiveIndex(isActive ? null : idx);
     };
 
     return (
+      // key 속성 이동
       <li key={`listitem-${idx}`}>
         <button className={style.button} onClick={handleClick}>{title}</button>
         {isActive && (
@@ -116,7 +109,6 @@ const AccordianMenu = ({ userInfo }) => {
                 isActive={isActive}
                 setActiveIndex={setActiveIndex}
                 key={item.key || item.title} // key 속성 유지, title로 key 설정
-                onClick={item.onClick}
               />
             );
           })
