@@ -25,7 +25,7 @@ function App() {
   return (
     <BrowserRouter>
     <div>
-    <Header userInfo={userInfo} /> {/* Header에 userInfo prop 전달 */}
+    <Header userInfo={userInfo} setUserInfo={setUserInfo}/> {/* Header에 userInfo prop 전달 */}
         <Routes>
         <Route path="/" exact={true} element={<MainPage userInfo={userInfo} />}></Route>
           <Route path="/summary" exact={true} element={<Summary userInfo={userInfo}/>}></Route>

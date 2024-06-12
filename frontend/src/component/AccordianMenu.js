@@ -65,6 +65,8 @@ const AccordianMenu = ({ userInfo }) => {
 
   const ListItem = ({ title, idx, list = [], isActive, setActiveIndex }) => {
     const handleClick = () => {
+      console.log(title)
+      console.log(list[0])
       setActiveIndex(isActive ? null : idx);
     };
 
@@ -73,7 +75,8 @@ const AccordianMenu = ({ userInfo }) => {
         <button className={style.button} onClick={handleClick}>{title}</button>
         {isActive && (
           <ul className={style.slideDown}>
-            {list.map((item) => (
+            {list.map((item) => 
+            (
               <li
                 className={style.liActive}
                 key={item.key}

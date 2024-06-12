@@ -46,11 +46,10 @@ function MainPage({ userInfo }) {
           <SearchBar onSubmit={setUrl} />
           <TitleInputBar onSubmit={setTitle} />
         </div>
-        <button onClick={handleSearch}>요약하기</button>
-        <Link to={`/summary`}>요약 화면</Link>
+        <button className="Main__searchBar__btn" onClick={handleSearch}>요약하기</button>
 
-      <Link to={`recommend/${userInfo.id }`}>추천 화면</Link>
-      <Link to={`/history/${userInfo.id}`}>요약 기록</Link>
+      {userInfo ? <div><Link to={`recommend/${userInfo.id }`}>추천 화면</Link>
+      <Link to={`/history/${userInfo.id}`}>요약 기록</Link> </div>: null}
       </div>
     </div>
   );

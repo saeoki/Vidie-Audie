@@ -7,9 +7,8 @@ body {
 }
 
 .search-bar {
-    display: block;
     align-items: center;
-
+    width:1000px;
 }
 
 .search-bar input {

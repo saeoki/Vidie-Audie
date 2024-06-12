@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 import "./Header.css";
 import Sidebar from "./SideBar2";
 import LoginBtn from "./LoginBtn";
-import { TfiLayoutSidebar2 } from "react-icons/tfi";
 
 
-function Header({userInfo}) {
+function Header({userInfo, setUserInfo }) {
     return (
         <div>
         <div className="header__div">
@@ -19,7 +18,7 @@ function Header({userInfo}) {
                 </div>
             </div>
                 <div className="header__div__login">
-                    <LoginBtn/>
+                    <LoginBtn userInfo={userInfo} setUserInfo={setUserInfo}/>
                 </div>
         </div>
         <div className="divSpace"></div>

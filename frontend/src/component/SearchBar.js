@@ -13,11 +13,11 @@ const SearchBar = ({ onSubmit }) => {
     <form onSubmit={onFormSubmit} className={styles["search-bar"]} >
       <input
         type="text"
-        placeholder="요약할 Youtube URL 붙여넣기"
+        placeholder="요약할 Youtube URL 붙여넣고 오른쪽 버튼 클릭해주세요!"
         value={term}
         onChange={(e) => setTerm(e.target.value)}
       />
-      <button type="submit">요약하기</button>
+      <button type="submit">링크 넣기</button>
     </form>
   );
 };
