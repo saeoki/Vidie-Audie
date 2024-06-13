@@ -8,10 +8,14 @@ import axios from 'axios';
 import SearchBar from '../component/SearchBar';
 import TitleInputBar from '../component/TitleInputBar';
 
+const apiUrl = process.env.REACT_APP_API_BASE_URL;
+
+
 function MainPage({ userInfo }) {
   const [url, setUrl] = useState('');
   const [title, setTitle] = useState('');
   const navigate = useNavigate();
+  
 
   const handleSearch = async () => {
     if (!url || !title) {
@@ -19,15 +23,33 @@ function MainPage({ userInfo }) {
       return;
     }
 
+    // const videoIdFromURI = url.split('?v=').length > 1 ? url.split('?v=')[1].split('&')[0] : url.split('?')[0].replace('https://youtu.be/', '');
     const videoIdFromURI = url.split('?v=').length > 1 ? url.split('?v=')[1].split('&')[0] : url;
+    let summary;
+    let keyword;
+    try{
+      const response = await axios.post(`${apiUrl}/MainPage`, {
+        url: url,
+        title: title
+      });
 
-    // URL과 제목을 데이터베이스에 저장
+      ({ keyword, summary } = response.data);
+
+      console.log('Success: ', response.data);
+    } catch (error) {
+      console.error('Error: ', error)
+    }
+
+
+    // URL과 제목, 서버로 부터 받은 keyword와 summary를 데이터베이스에 저장
     if (userInfo) {
       try {
-        console.log(`Saving record for user ${userInfo.id}: URL=${videoIdFromURI}, Title=${title}`);
-        await axios.post(`http://localhost:5000/user/${userInfo.id}/add_record`, {
-          url: videoIdFromURI,
-          title: title
+        console.log(`Saving record for user ${userInfo.id}: URL=${url}, Title=${title}, Summary=${summary}, Keyword=${keyword}`);
+        await axios.post(`${apiUrl}/user/${userInfo.id}/add_record`, {
+          url: url,
+          title: title,
+          keyword: keyword,
+          summary: summary
         });
         console.log("Record saved successfully");
       } catch (error) {
