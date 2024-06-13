@@ -4,6 +4,8 @@ import axios from 'axios';
 import "./Recommend.css";
 import NeedLogin from '../component/NeedLogin';
 
+const apiUrl = process.env.REACT_APP_API_BASE_URL;
+
 function Recommend ({userInfo}) {
     const[keyword,setKeyword] = useState();
     const[keywordCnt, setKeywordCnt] = useState();

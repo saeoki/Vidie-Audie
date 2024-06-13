@@ -8,12 +8,13 @@ import axios from 'axios';
 import SearchBar from '../component/SearchBar';
 import TitleInputBar from '../component/TitleInputBar';
 
+const apiUrl = process.env.REACT_APP_API_BASE_URL;
+
 function MainPage({ userInfo }) {
   const [url, setUrl] = useState('');
   const [title, setTitle] = useState('');
   const navigate = useNavigate();
   
-
   const handleSearch = async () => {
     if (!url || !title) {
       alert("URL과 제목을 모두 입력해주세요.");

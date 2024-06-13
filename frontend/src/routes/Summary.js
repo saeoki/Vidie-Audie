@@ -1,11 +1,11 @@
 import React ,{useEffect,useState}from "react";
-import React ,{useEffect,useState}from "react";
 import { useParams } from "react-router-dom";
 import "./Summary.css";
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import YouTube from "react-youtube";
 import axios from "axios";
-import axios from "axios";
+
+const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
 function Summary() {
   const { vid } = useParams();
@@ -15,11 +15,18 @@ function Summary() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // 데이터베이스에서 제목을 가져오는 API 호출
     const fetchTitle = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/video_title/${vid}`);
+        const videoUrl = encodeURIComponent(`https://www.youtube.com/watch?v=${vid}`);
+        const response = await axios.get(`${apiUrl}/video_title/${videoUrl}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': '69420'
+          }
+        });
+        console.log(response)
         setTitle(response.data.title);
+        console.log(title)
       } catch (e) {
         console.error("Error fetching title:", e);
       }
@@ -39,8 +46,9 @@ useEffect(() => {
   };
   //keyword 가져오기
     try {
-        const keywordRes = await axios.get(`http://localhost:5000/video/${vid}/keywords`);
-        console.log(keywordRes.data);
+        const keywordRes = await axios.get(`${apiUrl}/video/${vid}/keywords`);
+        console.log("url: ",`${apiUrl}/video/${vid}/keywords`);
+        console.log("keywordres:",keywordRes);
         optionParams.q = keywordRes.data;
     } catch (e) {
         setError(e);
