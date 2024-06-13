@@ -33,7 +33,13 @@ function Recommend ({userInfo}) {
         const fetchVideos = async () => {
           //top keyword 가져오기
             try {
-                const topkeywordRes = await axios.get(`http://localhost:5000/user/${userInfo.id}/top_keywords`);
+                const topkeywordRes = await axios.get(`${apiUrl}/user/${userInfo.id}/top_keywords`, {
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'ngrok-skip-browser-warning': '69420'
+                    }
+                  });
+                console.log(topkeywordRes)
                 console.log("reskeyword:",topkeywordRes.data[0].count);
                 setKeyword(topkeywordRes.data);
                 console.log("Keywords: ",keyword)
