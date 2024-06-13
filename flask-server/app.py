@@ -6,7 +6,6 @@ from flask_cors import CORS
 import os
 from datetime import datetime
 from dotenv import load_dotenv
-import os
 
 load_dotenv()
 
@@ -184,9 +183,6 @@ def get_video_title(video_id):
         db_conn.close()
 
     return jsonify({'title': title})
-
-
-
 
 
 
