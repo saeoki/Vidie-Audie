@@ -120,13 +120,14 @@ if(!userInfo) {
                                         <div className='summary__recommend__contents__videoName'>{video.snippet.title}</div>
                                     </a>
                                 </div>
-                            </div>))}
+                                </div>))}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
-}
+
 
 export default Recommend;

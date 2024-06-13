@@ -10,6 +10,7 @@ import LoginPage from './routes/LoginPage';
 import Header from './component/Header';
 import Recommend from './routes/Recommend';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 function App() {
 
