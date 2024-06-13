@@ -179,6 +179,61 @@ def get_video_title(video_id):
 
     return jsonify({'title': title})
 
+@app.route('/user/<int:user_id>/top_keywords', methods=['GET'])
+def get_top_keywords(user_id):
+    db_conn = get_db_connection()
+    if db_conn is None:
+        print('데이터베이스 연결 실패')
+        return jsonify({'error': '데이터베이스 연결 실패'}), 500
+
+    cursor = db_conn.cursor()
+    try:
+        cursor.execute("""
+            SELECT keyword, COUNT(*) as keyword_count
+            FROM user_records
+            WHERE user_id = %s
+            GROUP BY keyword
+            ORDER BY keyword_count DESC
+            LIMIT 2
+        """, (user_id,))
+        results = cursor.fetchall()
+        print("최다 키워드 조회 성공")
+    except mysql.connector.Error as err:
+        print(f"SQL 실행 오류: {err}")
+        return jsonify({'error': str(err)}), 500
+    finally:
+        cursor.close()
+        db_conn.close()
+
+    if results:
+        top_keywords = [{'keyword': result[0], 'count': result[1]} for result in results]
+        return jsonify(top_keywords)
+    else:
+        return jsonify({'error': 'No keywords found'}), 404
+
+@app.route('/video/<video_id>/keywords', methods=['GET'])
+def get_keywords(video_id):
+    db_conn = get_db_connection()
+    if db_conn is None:
+        print('데이터베이스 연결 실패')
+        return jsonify({'error': '데이터베이스 연결 실패'}), 500
+
+    cursor = db_conn.cursor()
+    try:
+        cursor.execute("""
+            SELECT keyword FROM user_records WHERE video_url = %s
+        """, (video_id,))
+        keywords = cursor.fetchall()
+        print("키워드 조회 성공")
+    except mysql.connector.Error as err:
+        print(f"SQL 실행 오류: {err}")
+        return jsonify({'error': str(err)}), 500
+    finally:
+        cursor.close()
+        db_conn.close()
+
+    return jsonify([keyword[0] for keyword in keywords])
+
 
 
 

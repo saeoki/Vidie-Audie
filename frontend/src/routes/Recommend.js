@@ -5,8 +5,9 @@ import "./Recommend.css";
 import NeedLogin from '../component/NeedLogin';
 
 function Recommend ({userInfo}) {
-    const[keyword,setKeyword] = useState([]);
-    const [videos, setvideos] = useState([{"kind":"youtube#searchResult","etag":"Axp7kVMhibCsKIVKDSgtQJJWsRY","id":{"kind":"youtube#video","videoId":"M6A35kfEQxI"},"snippet":{"publishedAt":"2023-03-31T14:18:08Z","channelId":"UCaNdM2jcA_qXeMmi-a3CObw","title":"릴카 랄로 누군가를 좋아한다는 사실이… #shorts","description":"릴카 랄로 누군가를 좋아한다는 사실이… #shorts.","thumbnails":{"default":{"url":"https://i.ytimg.com/vi/M6A35kfEQxI/default.jpg","width":120,"height":90},"medium":{"url":"https://i.ytimg.com/vi/M6A35kfEQxI/mqdefault.jpg","width":320,"height":180},"high":{"url":"https://i.ytimg.com/vi/M6A35kfEQxI/hqdefault.jpg","width":480,"height":360}},"channelTitle":"김남빈","liveBroadcastContent":"none","publishTime":"2023-03-31T14:18:08Z"}},{"kind":"youtube#searchResult","etag":"1idZoNTfxCxsb_VM9ghi3JG3VfQ","id":{"kind":"youtube#video","videoId":"CMcb1MMfGbE"},"snippet":{"publishedAt":"2024-01-05T14:53:49Z","channelId":"UCpMU2iFYOsk5zMkef6ajJDw","title":"랄로 사랑에 빠지다","description":"","thumbnails":{"default":{"url":"https://i.ytimg.com/vi/CMcb1MMfGbE/default.jpg","width":120,"height":90},"medium":{"url":"https://i.ytimg.com/vi/CMcb1MMfGbE/mqdefault.jpg","width":320,"height":180},"high":{"url":"https://i.ytimg.com/vi/CMcb1MMfGbE/hqdefault.jpg","width":480,"height":360}},"channelTitle":"SHORT TUBE","liveBroadcastContent":"none","publishTime":"2024-01-05T14:53:49Z"}},{"kind":"youtube#searchResult","etag":"8aGp9Qx8geCeVrQxAwnsrPPZkzc","id":{"kind":"youtube#video","videoId":"1mbWSUe40iU"},"snippet":{"publishedAt":"2024-05-25T09:02:08Z","channelId":"UC-Zedn7a_RJyb5hUQ-aGZog","title":"악놀 서버에 금지된 용암테러를 당했습니다.","description":"악놀 #악어의놀이터 #악놀2 #조매력 편집 : 핫산 님 썸네일 : 머독 머독 생방송 : https://bj.afreecatv.com/spbabobj 머독 팬카페 ...","thumbnails":{"default":{"url":"https://i.ytimg.com/vi/1mbWSUe40iU/default.jpg","width":120,"height":90},"medium":{"url":"https://i.ytimg.com/vi/1mbWSUe40iU/mqdefault.jpg","width":320,"height":180},"high":{"url":"https://i.ytimg.com/vi/1mbWSUe40iU/hqdefault.jpg","width":480,"height":360}},"channelTitle":"머독","liveBroadcastContent":"none","publishTime":"2024-05-25T09:02:08Z"}},{"kind":"youtube#searchResult","etag":"W22WwbcrGcrRpes3ONBZgANfAV0","id":{"kind":"youtube#video","videoId":"MOO21NeKDbU"},"snippet":{"publishedAt":"2024-05-24T09:58:24Z","channelId":"UCmHltryGykfakS-JmaxrNBg","title":"악어의 놀이터에서 머독님을 만났어요","description":"아이네 공식 거시기 채널입니다* 20240521 아이네 생방송: https://bj.afreecatv.com/inehine 아이네 유튜브: ...","thumbnails":{"default":{"url":"https://i.ytimg.com/vi/MOO21NeKDbU/default.jpg","width":120,"height":90},"medium":{"url":"https://i.ytimg.com/vi/MOO21NeKDbU/mqdefault.jpg","width":320,"height":180},"high":{"url":"https://i.ytimg.com/vi/MOO21NeKDbU/hqdefault.jpg","width":480,"height":360}},"channelTitle":"데친 숙주나물","liveBroadcastContent":"none","publishTime":"2024-05-24T09:58:24Z"}}]);
+    const[keyword,setKeyword] = useState();
+    const[keywordCnt, setKeywordCnt] = useState();
+    const [videos, setvideos] = useState();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const {uid} = useParams();
@@ -27,21 +28,32 @@ function Recommend ({userInfo}) {
     url=url.substr(0, url.length-1);
 */
     useEffect(()=> {
-        setKeyword([{"q":"랄로"},{"q":"머독"}])
-        console.log(userInfo)
+        const fetchVideos = async () => {
+          //top keyword 가져오기
+            try {
+                const topkeywordRes = await axios.get(`http://localhost:5000/user/${userInfo.id}/top_keywords`);
+                console.log("reskeyword:",topkeywordRes.data[0].count);
+                setKeyword(topkeywordRes.data);
+                console.log("Keywords: ",keyword)
+                //setKeywordCnt([{"q":topkeywordRes.data[0].count},{"q":topkeywordRes.data[1].count}])
+                //console.log("keyword count: ",keywordCnt)
+            } catch (e) {
+                setError(e);
+            }
+            
+        }
+        fetchVideos();
     }, [])
-
 //설정한 키워드를 useEffect로 가져옴
-/*
+
 useEffect(() => {
-        if (keyword.length === 0) return;
         const fetchVideos = async () => {
             setLoading(true);
             try {
                 const videoData = [];
                 for (const key of keyword) {
                     var optionParams={
-                        q:key.q,
+                        q:key.keyword,
                         part:"snippet",
                         key:"AIzaSyDxx65HnfkOWNWlfuxt8-hF3VgQk80LPx4",
                         type:"video",
@@ -68,7 +80,6 @@ useEffect(() => {
 
         fetchVideos();
     }, [keyword])
-    */
 // useEffect(()=> {
 //     setvideos([])
 // })
@@ -89,19 +100,24 @@ if(!userInfo) {
             <div className='recommend'>
                 <div className='recommend__analyze'>
                     <div className='recommend__analyze__text'>{nickname} 님은</div>
-                    <div className='recommend__analyze__text'>OO 키워드 N회</div>
-                    <div className='recommend__analyze__text'>OO 키워드 N회</div>
+                    
+                    { keyword && keyword.map((item, index) => (
+                        <div>
+                        <div className='recommend__analyze__text' key={index}>{item.keyword} 키워드 {item.count}회</div>
+                    </div>
+                    ))
+                    }
                     <div className='recommend__analyze__text'>요약했습니다</div>
                 </div>
                 <div className='recommend__container'>
                     <div className='recommend__container__nameplate'>추천 영상</div>
                     <div className='recommend__container__videosBox'>
-                            {videos.map((video) => (
+                            {videos && videos.map((video) => (
                                 <div className="recommend__container__videosBox__video">
                                     <div className="history__list__content">
                                     <a className="summary__recommend__contents__linkA" href={`https://www.youtube.com/watch?v=${video.id.videoId}`} target="_blank">
                                         <img className="summary__recommend__contents__video"src={`https://img.youtube.com/vi/${video.id.videoId}/mqdefault.jpg`} width="180px"></img>
-                                        <div className='summary__recommend__contents__title'>{video.snippet.title}</div>
+                                        <div className='summary__recommend__contents__videoName'>{video.snippet.title}</div>
                                     </a>
                                 </div>
                             </div>))}

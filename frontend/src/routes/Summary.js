@@ -16,9 +16,8 @@ function Summary() {
     // 데이터베이스에서 제목을 가져오는 API 호출
     const fetchTitle = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/get_record_title/${vid}`);
+        const response = await axios.get(`http://localhost:5000/video_title/${vid}`);
         setTitle(response.data.title);
-        console.log(response.data)
       } catch (e) {
         console.error("Error fetching title:", e);
       }
@@ -30,12 +29,20 @@ function Summary() {
 useEffect(() => {
   const fetchVideos = async () => {
     var optionParams={
-      q:"랄로",
+      q:"",
       part:"snippet",
       key:"AIzaSyBglDCxMV_AFedYSCM582trb08sqtnuteA",
       type:"video",
       maxResults:2
   };
+  //keyword 가져오기
+    try {
+        const keywordRes = await axios.get(`http://localhost:5000/video/${vid}/keywords`);
+        console.log(keywordRes.data);
+        optionParams.q = keywordRes.data;
+    } catch (e) {
+        setError(e);
+    }
     //youtube api URL만들기
     var url="https://www.googleapis.com/youtube/v3/search?";
     for(var option in optionParams){
@@ -87,7 +94,7 @@ useEffect(() => {
             <img className="summary__recommend__contents__video"src={`https://img.youtube.com/vi/${video.id.videoId}/mqdefault.jpg`} width="180px"></img>
             <div className='summary__recommend__contents__title'>{video.snippet.title}</div>
             </a>
-            </div>))};
+            </div>))}
         </div>
       </div>
     </div>
