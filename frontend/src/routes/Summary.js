@@ -13,11 +13,13 @@ function Summary() {
   const [videos, setvideos] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [summaryContent, setSummaryContent] = useState();
+  const videoUrl = encodeURIComponent(`https://www.youtube.com/watch?v=${vid}`);
 
   useEffect(() => {
     const fetchTitle = async () => {
+      //타이틀 가져오기
       try {
-        const videoUrl = encodeURIComponent(`https://www.youtube.com/watch?v=${vid}`);
         const response = await axios.get(`${apiUrl}/video_title/${videoUrl}`, {
           headers: {
             'Content-Type': 'application/json',
@@ -27,6 +29,19 @@ function Summary() {
         console.log(response)
         setTitle(response.data.title);
         console.log(title)
+      } catch (e) {
+        console.error("Error fetching title:", e);
+      }
+      try {
+        //요약 내용 가져오기
+        const response = await axios.get(`${apiUrl}/summary/${videoUrl}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': '69420'
+          }
+        });
+        setSummaryContent(response.data.summary);
+        console.log(summaryContent);
       } catch (e) {
         console.error("Error fetching title:", e);
       }
@@ -46,10 +61,14 @@ useEffect(() => {
   };
   //keyword 가져오기
     try {
-        const keywordRes = await axios.get(`${apiUrl}/video/${vid}/keywords`);
-        console.log("url: ",`${apiUrl}/video/${vid}/keywords`);
-        console.log("keywordres:",keywordRes);
-        optionParams.q = keywordRes.data;
+      const keywordResponse = await axios.get(`${apiUrl}/video/${videoUrl}/keywords`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': '69420'
+        }
+      });
+        console.log("keywordres:",keywordResponse);
+        optionParams.q = keywordResponse.data[0];
     } catch (e) {
         setError(e);
     }
@@ -60,8 +79,10 @@ useEffect(() => {
     }
     url=url.substr(0, url.length-1)
       setLoading(true);
+    //youtube 목록 가져요기
       try {
           const res = await axios.get(url);
+          console.log(res)
           setvideos(res.data);
       } catch (e) {
           setError(e);
@@ -93,7 +114,7 @@ useEffect(() => {
         </div>
         <div className="summary__contents__container">
           <div className="summary__contents__container__name">요 약</div>
-          <div className="summary__contents__container__content">요약내용</div>
+          <div className="summary__contents__container__content">{summaryContent}</div>
         </div>
         <div className='summary__recommend'>
           <div className='summary__recommend__name'>맞춤 추천</div>
