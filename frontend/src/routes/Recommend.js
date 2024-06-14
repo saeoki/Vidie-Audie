@@ -108,8 +108,8 @@ if(!userInfo) {
                     <div className='recommend__analyze__text'>{nickname} 님은</div>
                     
                     { keyword && keyword.map((item, index) => (
-                        <div>
-                        <div className='recommend__analyze__text' key={index}>{item.keyword} 키워드 {item.count}회</div>
+                        <div key={index}>
+                        <div className='recommend__analyze__text' >{item.keyword} 키워드 {item.count}회</div>
                     </div>
                     ))
                     }
@@ -119,7 +119,7 @@ if(!userInfo) {
                     <div className='recommend__container__nameplate'>추천 영상</div>
                     <div className='recommend__container__videosBox'>
                             {videos && videos.map((video) => (
-                                <div className="recommend__container__videosBox__video">
+                                <div className="recommend__container__videosBox__video" key={video.id.videoId}>
                                     <div className="history__list__content">
                                     <a className="summary__recommend__contents__linkA" href={`https://www.youtube.com/watch?v=${video.id.videoId}`} target="_blank">
                                         <img className="summary__recommend__contents__video"src={`https://img.youtube.com/vi/${video.id.videoId}/mqdefault.jpg`} width="180px"></img>

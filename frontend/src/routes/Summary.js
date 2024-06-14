@@ -124,8 +124,8 @@ useEffect(() => {
         <div className='summary__recommend'>
           <div className='summary__recommend__name'>맞춤 추천</div>
 
-          {videos && videos.items.map((video) =>(
-          <div className="summary__recommend__contents">
+          {videos && videos.items.map((video,index) =>(
+          <div className="summary__recommend__contents" key={index}>
           <a className="summary__recommend__contents__linkA" href={`https://www.youtube.com/watch?v=${video.id.videoId}`} target="_blank">
             <img className="summary__recommend__contents__video"src={`https://img.youtube.com/vi/${video.id.videoId}/mqdefault.jpg`} width="180px"></img>
             <div className='summary__recommend__contents__title'>{video.snippet.title}</div>
