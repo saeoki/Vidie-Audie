@@ -6,6 +6,7 @@ import YouTube from "react-youtube";
 import axios from "axios";
 
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
+const youtubeAPI = process.env.REACT_APP_YOUTUBE_API;
 
 function Summary() {
   const { vid } = useParams();
@@ -55,7 +56,7 @@ useEffect(() => {
     var optionParams={
       q:"",
       part:"snippet",
-      key:"AIzaSyBglDCxMV_AFedYSCM582trb08sqtnuteA",
+      key:youtubeAPI,
       type:"video",
       maxResults:2
   };
@@ -69,6 +70,7 @@ useEffect(() => {
       });
         console.log("keywordres:",keywordResponse);
         optionParams.q = keywordResponse.data[0];
+        console.log(optionParams.q)
     } catch (e) {
         setError(e);
     }
@@ -79,8 +81,11 @@ useEffect(() => {
     }
     url=url.substr(0, url.length-1)
       setLoading(true);
+    console.log(youtubeAPI)
     //youtube 목록 가져요기
       try {
+        url=url.replace(/(\s*)/g, "");
+        console.log("url: ", url)
           const res = await axios.get(url);
           console.log(res)
           setvideos(res.data);

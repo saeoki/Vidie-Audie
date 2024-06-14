@@ -5,6 +5,7 @@ import "./Recommend.css";
 import NeedLogin from '../component/NeedLogin';
 
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
+const youtubeAPI = process.env.REACT_APP_YOUTUBE_API;
 
 function Recommend ({userInfo}) {
     const[keyword,setKeyword] = useState();
@@ -19,7 +20,7 @@ function Recommend ({userInfo}) {
     /*var optionParams={
         q:"",
         part:"snippet",
-        key:"AIzaSyBglDCxMV_AFedYSCM582trb08sqtnuteA",
+        key:youtubeAPI,
         type:"video",
         maxResults:2
     };
@@ -39,10 +40,7 @@ function Recommend ({userInfo}) {
                       'ngrok-skip-browser-warning': '69420'
                     }
                   });
-                console.log(topkeywordRes)
-                console.log("reskeyword:",topkeywordRes.data[0].count);
                 setKeyword(topkeywordRes.data);
-                console.log("Keywords: ",keyword)
                 //setKeywordCnt([{"q":topkeywordRes.data[0].count},{"q":topkeywordRes.data[1].count}])
                 //console.log("keyword count: ",keywordCnt)
             } catch (e) {
@@ -52,7 +50,7 @@ function Recommend ({userInfo}) {
         }
         fetchVideos();
     }, [])
-//설정한 키워드를 useEffect로 가져옴
+//설정한 키워드 관련 영상 데이터 가져요기
 
 useEffect(() => {
         const fetchVideos = async () => {
@@ -63,7 +61,7 @@ useEffect(() => {
                     var optionParams={
                         q:key.keyword,
                         part:"snippet",
-                        key:"AIzaSyDxx65HnfkOWNWlfuxt8-hF3VgQk80LPx4",
+                        key:youtubeAPI,
                         type:"video",
                         maxResults:2
                     };

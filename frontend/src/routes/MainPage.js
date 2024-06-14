@@ -68,8 +68,7 @@ function MainPage({ userInfo }) {
         </div>
         <button className="Main__searchBar__btn" onClick={handleSearch}>요약하기</button>
 
-      {userInfo ? <div><Link to={`recommend/${userInfo.id }`}>추천 화면</Link>
-      <Link to={`/history/${userInfo.id}`}>요약 기록</Link> </div>: null}
+      {userInfo ? <div className='recommendLink'><Link to={`recommend/${userInfo.id }`}>추천 화면</Link></div>: null}
       </div>
     </div>
   );

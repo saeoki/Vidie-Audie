@@ -3,6 +3,8 @@ import style from './AccordianMenu.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://2dd6-35-233-205-173.ngrok-free.app';
+
 const AccordianMenu = ({ userInfo }) => {
   const [records, setRecords] = useState([]);
   const [activeIndex, setActiveIndex] = useState(null);
@@ -16,10 +18,20 @@ const AccordianMenu = ({ userInfo }) => {
 
   useEffect(() => {
     if (userInfo && userInfo.id) {
-      axios.get(`http://localhost:5000/user/${userInfo.id}/records`)
+      axios.get(`${apiUrl}/user/${userInfo.id}/records`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': '69420'
+        }
+      })
         .then(response => {
           console.log("Fetched records: ", response.data);
-          setRecords(response.data || []);
+          if (Array.isArray(response.data)) {
+            setRecords(response.data);
+          } else {
+            console.error("Unexpected response format:", response.data);
+            setRecords([]);
+          }
         })
         .catch(error => {
           console.error("Error fetching records:", error);
@@ -32,58 +44,54 @@ const AccordianMenu = ({ userInfo }) => {
     navigate(`/summary/${encodeURIComponent(videoUrl)}`);
   };
 
-  // MENU_LIST 생성 시 key 값 추가
+  const handleRecommendClick = () => {
+    const uid = userInfo?.id || 'defaultUID'; // 사용자 정보가 없는 경우를 대비해 기본값을 설정
+    navigate(`/recommend/${uid}`);
+  };
+
+  const handleUserInfoClick = () => {
+    setActiveIndex(activeIndex === 'user-info' ? null : 'user-info');
+  };
+
   const MENU_LIST = [
-    { title: '사용자 정보', list: [userInfo?.kakao_account?.profile?.nickname || '이름'], key: 'user-info' },
-    { title: '맞춤 추천', list: [], key: 'recommendations' }, // 맞춤 추천 항목에서 하위 목록 제거
+    { title: '사용자 정보', list: [userInfo?.properties?.nickname || '이름 없음'], key: 'user-info', onClick: handleUserInfoClick },
+    { title: '맞춤 추천', list: [], key: 'recommendations', onClick: handleRecommendClick },
     {
       title: '요약 기록',
       list: (userInfo && records.length > 0)
         ? records.map((record, idx) => {
             const title = record[2]?.length > 4 ? `${record[2].substring(0, 4)}...` : record[2];
-            const videoUrl = record[1];
-            return { title, videoUrl, key: `record-${idx}` }; // key 속성 추가
+            const videoUrl = record[1].split('?v=').length > 1 ? record[1].split('?v=')[1].split('&')[0] : record[1];
+            return { title, videoUrl, key: `record-${idx}` };
           })
         : [{ title: '기록이 없습니다.', videoUrl: '', key: 'no-records' }],
-      key: 'summary-records' // key 속성 추가
+      key: 'summary-records'
     },
   ];
 
-  const Nav = ({ children }) => {
-    return <nav>{children}</nav>;
-  };
+  const Nav = ({ children }) => <nav>{children}</nav>;
+  const TitleWrapper = ({ children }) => <div>{children}</div>;
+  const Title = ({ children }) => <h1>{children}</h1>;
+  const Ul = ({ children }) => <ul>{children}</ul>;
 
-  const TitleWrapper = ({ children }) => {
-    return <div>{children}</div>;
-  };
-
-  const Title = ({ children }) => {
-    return <h1>{children}</h1>;
-  };
-
-  const Ul = ({ children }) => {
-    return <ul>{children}</ul>;
-  };
-
-  const ListItem = ({ title, idx, list = [], isActive, setActiveIndex }) => {
+  const ListItem = ({ title, idx, list = [], isActive, setActiveIndex, onClick }) => {
     const handleClick = () => {
-      console.log(title)
-      console.log(list[0])
       setActiveIndex(isActive ? null : idx);
+      if (onClick) {
+        onClick();
+      }
     };
 
     return (
-      // key 속성 이동
       <li key={`listitem-${idx}`}>
         <button className={style.button} onClick={handleClick}>{title}</button>
         {isActive && (
           <ul className={style.slideDown}>
-            {list.map((item) => 
-            (
+            {list.map((item, subIdx) => (
               <li
                 className={style.liActive}
-                key={item.key || item.title} // key 속성 유지, title로 key 설정
-                onClick={() => idx === 2 ? handleRecordClick(item.videoUrl) : null}
+                key={item.key || `${item.title}-${subIdx}`}
+                onClick={() => idx === 'summary-records' && item.videoUrl ? handleRecordClick(item.videoUrl) : null}
               >
                 {item.title}
               </li>
@@ -96,29 +104,26 @@ const AccordianMenu = ({ userInfo }) => {
 
   return (
     <Nav>
-      <TitleWrapper>
-        <Title></Title>
-      </TitleWrapper>
+      <TitleWrapper />
       <Ul>
-        {userInfo ? (
-          MENU_LIST.map((item, idx) => {
-            const isActive = idx === activeIndex;
-
-            return (
-              <ListItem
-                title={item.title}
-                idx={idx}
-                list={item.list}
-                isActive={isActive}
-                setActiveIndex={setActiveIndex}
-                key={item.key || item.title} // key 속성 유지, title로 key 설정
-              />
-            );
-          })
-        ) : null}
+        {MENU_LIST.map((item) => {
+          const isActive = activeIndex === item.key;
+          return (
+            <ListItem
+              title={item.title}
+              idx={item.key}
+              list={item.list}
+              isActive={isActive}
+              setActiveIndex={setActiveIndex}
+              key={item.key || item.title}
+              onClick={item.onClick}
+            />
+          );
+        })}
       </Ul>
     </Nav>
   );
 };
 
 export default AccordianMenu;
+

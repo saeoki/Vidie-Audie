@@ -4,7 +4,6 @@ import {React, useState, useEffect} from 'react';
 import {BrowserRouter, Route, Routes,} from "react-router-dom"
 import Summary from './routes/Summary';
 import MainPage from './routes/MainPage';
-import History from './routes/History';
 import HistoryDetail from './routes/HistoryDetail';
 import LoginPage from './routes/LoginPage';
 import Header from './component/Header';
@@ -33,7 +32,6 @@ function App() {
           <Route path="/LoginPage" exact={true} element={<LoginPage setUserInfo={setUserInfo} />}></Route>
           <Route path="/summary/:vid" exact={true} element={<Summary />}></Route>
           <Route path="/recommend/:uid" exact={true} element={<Recommend userInfo={userInfo}/>} ></Route>
-          <Route path="/history/:uid" exact={true} element={<History userInfo={userInfo}/>}></Route>
           <Route path="/historyDetail/:uid/:vid" exact={true} element={<HistoryDetail userInfo={userInfo}/>}></Route>
         </Routes>
     </div>
