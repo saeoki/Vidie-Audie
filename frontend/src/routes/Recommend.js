@@ -5,6 +5,7 @@ import "./Recommend.css";
 import NeedLogin from '../component/NeedLogin';
 
 const apiUrl = process.env.REACT_APP_API_BASE_URL;
+const youtubeAPI = process.env.REACT_APP_YOUTUBE_API;
 
 function Recommend ({userInfo}) {
     const[keyword,setKeyword] = useState();
@@ -19,7 +20,7 @@ function Recommend ({userInfo}) {
     /*var optionParams={
         q:"",
         part:"snippet",
-        key:"AIzaSyBglDCxMV_AFedYSCM582trb08sqtnuteA",
+        key:youtubeAPI,
         type:"video",
         maxResults:2
     };
@@ -33,10 +34,13 @@ function Recommend ({userInfo}) {
         const fetchVideos = async () => {
           //top keyword 가져오기
             try {
-                const topkeywordRes = await axios.get(`http://localhost:5000/user/${userInfo.id}/top_keywords`);
-                console.log("reskeyword:",topkeywordRes.data[0].count);
+                const topkeywordRes = await axios.get(`${apiUrl}/user/${userInfo.id}/top_keywords`, {
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'ngrok-skip-browser-warning': '69420'
+                    }
+                  });
                 setKeyword(topkeywordRes.data);
-                console.log("Keywords: ",keyword)
                 //setKeywordCnt([{"q":topkeywordRes.data[0].count},{"q":topkeywordRes.data[1].count}])
                 //console.log("keyword count: ",keywordCnt)
             } catch (e) {
@@ -46,7 +50,7 @@ function Recommend ({userInfo}) {
         }
         fetchVideos();
     }, [])
-//설정한 키워드를 useEffect로 가져옴
+//설정한 키워드 관련 영상 데이터 가져요기
 
 useEffect(() => {
         const fetchVideos = async () => {
@@ -57,7 +61,7 @@ useEffect(() => {
                     var optionParams={
                         q:key.keyword,
                         part:"snippet",
-                        key:"AIzaSyDxx65HnfkOWNWlfuxt8-hF3VgQk80LPx4",
+                        key:youtubeAPI,
                         type:"video",
                         maxResults:2
                     };
@@ -104,8 +108,8 @@ if(!userInfo) {
                     <div className='recommend__analyze__text'>{nickname} 님은</div>
                     
                     { keyword && keyword.map((item, index) => (
-                        <div>
-                        <div className='recommend__analyze__text' key={index}>{item.keyword} 키워드 {item.count}회</div>
+                        <div key={index}>
+                        <div className='recommend__analyze__text' >{item.keyword} 키워드 {item.count}회</div>
                     </div>
                     ))
                     }
@@ -115,7 +119,7 @@ if(!userInfo) {
                     <div className='recommend__container__nameplate'>추천 영상</div>
                     <div className='recommend__container__videosBox'>
                             {videos && videos.map((video) => (
-                                <div className="recommend__container__videosBox__video">
+                                <div className="recommend__container__videosBox__video" key={video.id.videoId}>
                                     <div className="history__list__content">
                                     <a className="summary__recommend__contents__linkA" href={`https://www.youtube.com/watch?v=${video.id.videoId}`} target="_blank">
                                         <img className="summary__recommend__contents__video"src={`https://img.youtube.com/vi/${video.id.videoId}/mqdefault.jpg`} width="180px"></img>
