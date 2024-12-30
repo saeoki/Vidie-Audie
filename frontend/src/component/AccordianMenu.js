@@ -53,8 +53,14 @@ const AccordianMenu = ({ userInfo }) => {
     setActiveIndex(activeIndex === 'user-info' ? null : 'user-info');
   };
 
+  const handleLoginClick = () => {
+    if (!userInfo) {
+      navigate('/loginPage'); // 로그인 페이지로 이동
+    }
+  };
+
   const MENU_LIST = [
-    { title: '사용자 정보', list: [userInfo?.properties?.nickname || '이름 없음'], key: 'user-info', onClick: handleUserInfoClick },
+    { title: '사용자 정보', list: userInfo ? [{ title: userInfo.properties?.nickname || '로그인 해주세요!', key: 'user-info-item' }] : [{ title: '로그인 해주세요!', key: 'login-item' }], key: 'user-info', onClick: handleUserInfoClick },
     { title: '맞춤 추천', list: [], key: 'recommendations', onClick: handleRecommendClick },
     {
       title: '요약 기록',
@@ -91,7 +97,13 @@ const AccordianMenu = ({ userInfo }) => {
               <li
                 className={style.liActive}
                 key={item.key || `${item.title}-${subIdx}`}
-                onClick={() => idx === 'summary-records' && item.videoUrl ? handleRecordClick(item.videoUrl) : null}
+                onClick={() => {
+                  if (idx === 'user-info' && item.key === 'login-item') {
+                    handleLoginClick();
+                  } else if (idx === 'summary-records' && item.videoUrl) {
+                    handleRecordClick(item.videoUrl);
+                  }
+                }}
               >
                 {item.title}
               </li>
@@ -126,4 +138,3 @@ const AccordianMenu = ({ userInfo }) => {
 };
 
 export default AccordianMenu;
-
