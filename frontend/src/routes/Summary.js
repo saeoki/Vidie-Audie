@@ -11,6 +11,7 @@ const youtubeAPI = process.env.REACT_APP_YOUTUBE_API;
 function Summary() {
   const { vid } = useParams();
   const [title, setTitle] = useState('');
+  const [summary, setSummary] = useState('');
   const [videos, setvideos] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -49,6 +50,28 @@ function Summary() {
     };
     fetchTitle();
   }, [vid]);
+
+
+  useEffect(() => {
+    const fetchSummary = async () => {
+      try {
+        const videoUrl = encodeURIComponent(`https://www.youtube.com/watch?v=${vid}`);
+        const response = await axios.get(`${apiUrl}/video_summary/${videoUrl}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': '69420'
+          }
+        });
+        console.log(response)
+        setSummary(response.data.summary);
+        console.log(summary)
+      } catch (e) {
+        console.error("Error fetching summary:", e);
+      }
+    };
+    fetchSummary();
+  }, [vid]);
+
 
 //api로부터 데이터 가져오기 -> videos
 useEffect(() => {
