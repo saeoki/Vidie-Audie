@@ -1,6 +1,6 @@
 # 📌 프로젝트 개요
 
-<img width="657" height="430" alt="image" src="https://github.com/user-attachments/assets/8dabf2ff-3adb-46c9-b893-0af1c77d019c" />
+<img width="1254" height="834" alt="image" src="https://github.com/user-attachments/assets/7296d27f-ad5e-4d80-940c-1b7881904706" />
 
 Youtube 영상 URL만 입력하면 영상 내용을 요약하고, 핵심 키워드를 기반으로 관련 영상을 추천하는 서비스를 기획했습니다.
 
